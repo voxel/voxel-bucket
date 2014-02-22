@@ -13,6 +13,7 @@ class BucketPlugin
 
     opts.registerBlocks ?= true
     opts.registerItems ?= true
+    opts.registerRecipes ?= true
 
     @enable()
 
@@ -29,7 +30,19 @@ class BucketPlugin
 
     if @opts.registerBlocks
       for fluid in @opts.fluids
+        # TODO: fluid mechanics, probably in separate module (these blocks are completely static)
+        # https://github.com/deathcap/voxel-ideas/issues/1
         @registry.registerBlock fluid, {texture: "#{fluid}_still", fluid: fluid}
+
+    if @opts.registerRecipes
+      @recipes = @game.plugins.get('voxel-recipes') ? throw new Error('voxel-bucket requires voxel-recipes plugin when opts.registerRecipes enabled')
+
+      @recipes.registerPositional [
+        ['ingotIron', undefined, 'ingotIron'],
+        ['ingotIron', 'ingotIron', 'ingotIron']
+        [undefined, undefined, undefined]], # TODO: 2x3 recipe shape, not 3x3 - https://github.com/deathcap/craftingrecipes/issues/2
+          new ItemPile('bucket')
+        
 
   disable: () ->
     # TODO

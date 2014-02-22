@@ -30,11 +30,14 @@
       if (opts.registerItems == null) {
         opts.registerItems = true;
       }
+      if (opts.registerRecipes == null) {
+        opts.registerRecipes = true;
+      }
       this.enable();
     }
 
     BucketPlugin.prototype.enable = function() {
-      var bucketName, fluid, ucfirst, _i, _j, _len, _len1, _ref, _ref1, _results;
+      var bucketName, fluid, ucfirst, _i, _j, _len, _len1, _ref, _ref1, _ref2;
       if (this.opts.registerItems) {
         this.registry.registerItem('bucket', {
           itemTexture: 'i/bucket_empty',
@@ -58,15 +61,23 @@
       }
       if (this.opts.registerBlocks) {
         _ref1 = this.opts.fluids;
-        _results = [];
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           fluid = _ref1[_j];
-          _results.push(this.registry.registerBlock(fluid, {
+          this.registry.registerBlock(fluid, {
             texture: "" + fluid + "_still",
             fluid: fluid
-          }));
+          });
         }
-        return _results;
+      }
+      if (this.opts.registerRecipes) {
+        this.recipes = (function() {
+          if ((_ref2 = this.game.plugins.get('voxel-recipes')) != null) {
+            return _ref2;
+          } else {
+            throw new Error('voxel-bucket requires voxel-recipes plugin when opts.registerRecipes enabled');
+          }
+        }).call(this);
+        return this.recipes.registerPositional([['ingotIron', void 0, 'ingotIron'], ['ingotIron', 'ingotIron', 'ingotIron'], [void 0, void 0, void 0]], new ItemPile('bucket'));
       }
     };
 
