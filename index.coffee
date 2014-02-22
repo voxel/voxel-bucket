@@ -48,6 +48,8 @@ class BucketPlugin
     fluidBucket = @fluidBuckets[fluid]
     return if not fluidBucket
 
+    # remove fluid from world, and add to returned bucket item
+    @game.setBlock target.voxel, 0
     return new ItemPile(fluidBucket)  # replace empty bucket with filled bucket
 
   placeFluid: (fluid, held, target)  ->

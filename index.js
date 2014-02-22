@@ -91,6 +91,7 @@
       if (!fluidBucket) {
         return;
       }
+      this.game.setBlock(target.voxel, 0);
       return new ItemPile(fluidBucket);
     };
 
