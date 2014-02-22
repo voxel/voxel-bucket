@@ -36,7 +36,7 @@ class BucketPlugin
 
   pickupFluid: (held, target) ->
     console.log 'pickupFluid',held,target
-    return if not target?
+    return if not target
 
     name = @registry.getBlockName target.value
     props = @registry.getBlockProps name
@@ -55,7 +55,7 @@ class BucketPlugin
   placeFluid: (fluid, held, target)  ->
     console.log 'placeFluid',fluid,held,target
 
-    return if not target?
+    return if not target
 
     fluidIndex = @registry.getBlockID fluid
     return if not fluidIndex?

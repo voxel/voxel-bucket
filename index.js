@@ -75,7 +75,7 @@
     BucketPlugin.prototype.pickupFluid = function(held, target) {
       var fluid, fluidBucket, name, props;
       console.log('pickupFluid', held, target);
-      if (target == null) {
+      if (!target) {
         return;
       }
       name = this.registry.getBlockName(target.value);
@@ -98,7 +98,7 @@
     BucketPlugin.prototype.placeFluid = function(fluid, held, target) {
       var fluidIndex;
       console.log('placeFluid', fluid, held, target);
-      if (target == null) {
+      if (!target) {
         return;
       }
       fluidIndex = this.registry.getBlockID(fluid);
