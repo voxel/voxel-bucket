@@ -1,0 +1,6 @@
+# voxel-bucket
+
+## License
+
+MIT
+
