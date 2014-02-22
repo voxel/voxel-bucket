@@ -96,7 +96,17 @@
     };
 
     BucketPlugin.prototype.placeFluid = function(fluid, held, target) {
-      return console.log('placeFluid', fluid, held, target);
+      var fluidIndex;
+      console.log('placeFluid', fluid, held, target);
+      if (target == null) {
+        return;
+      }
+      fluidIndex = this.registry.getBlockID(fluid);
+      if (fluidIndex == null) {
+        return;
+      }
+      this.game.setBlock(target.adjacent, fluidIndex);
+      return new ItemPile('bucket');
     };
 
     return BucketPlugin;

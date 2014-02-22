@@ -55,3 +55,11 @@ class BucketPlugin
   placeFluid: (fluid, held, target)  ->
     console.log 'placeFluid',fluid,held,target
 
+    return if not target?
+
+    fluidIndex = @registry.getBlockID fluid
+    return if not fluidIndex?
+
+    # set voxel and empty bucket 
+    @game.setBlock target.adjacent, fluidIndex
+    return new ItemPile('bucket')
