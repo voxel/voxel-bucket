@@ -34,7 +34,8 @@
       var fluid, ucfirst, _i, _len, _ref, _results;
       if (this.opts.registerItems) {
         this.registry.registerItem('bucket', {
-          itemTexture: 'i/bucket_empty'
+          itemTexture: 'i/bucket_empty',
+          onUse: this.pickupFluid.bind(this)
         });
         ucfirst = function(s) {
           return s.substr(0, 1).toUpperCase() + s.substring(1);
@@ -46,7 +47,8 @@
           _results.push(this.registry.registerItem("bucket" + (ucfirst(fluid)), {
             itemTexture: "i/bucket_" + fluid,
             fluid: fluid,
-            containerItem: 'bucket'
+            containerItem: 'bucket',
+            onUse: this.placeFluid.bind(this, fluid)
           }));
         }
         return _results;
@@ -54,6 +56,14 @@
     };
 
     BucketPlugin.prototype.disable = function() {};
+
+    BucketPlugin.prototype.pickupFluid = function(held, target) {
+      return console.log('pickupFluid', held, target);
+    };
+
+    BucketPlugin.prototype.placeFluid = function(fluid, held, target) {
+      return console.log('placeFluid', fluid, held, target);
+    };
 
     return BucketPlugin;
 
