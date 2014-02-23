@@ -1,6 +1,6 @@
 {
   "name": "voxel-bucket",
-  "description": "",
+  "description": "buckets to pickup and place fluids (voxel.js plugin)",
   "version": "0.0.1",
   "repository": {
     "type": "git",
