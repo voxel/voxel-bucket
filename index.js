@@ -41,7 +41,8 @@
       if (this.opts.registerItems) {
         this.registry.registerItem('bucket', {
           itemTexture: 'i/bucket_empty',
-          onUse: this.pickupFluid.bind(this)
+          onUse: this.pickupFluid.bind(this),
+          displayName: 'Empty Bucket'
         });
         ucfirst = function(s) {
           return s.substr(0, 1).toUpperCase() + s.substring(1);
@@ -54,7 +55,8 @@
             itemTexture: "i/bucket_" + fluid,
             fluid: fluid,
             containerItem: 'bucket',
-            onUse: this.placeFluid.bind(this, fluid)
+            onUse: this.placeFluid.bind(this, fluid),
+            displayName: "" + (ucfirst(fluid)) + " Bucket"
           });
           this.fluidBuckets[fluid] = bucketName;
         }

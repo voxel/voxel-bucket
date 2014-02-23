@@ -19,20 +19,32 @@ class BucketPlugin
 
   enable: () ->
     if @opts.registerItems
-      @registry.registerItem 'bucket', {itemTexture: 'i/bucket_empty', onUse: @pickupFluid.bind(@)}
+      @registry.registerItem 'bucket',
+        itemTexture: 'i/bucket_empty'
+        onUse: @pickupFluid.bind(@)
+        displayName: 'Empty Bucket'
 
       ucfirst = (s) -> s.substr(0, 1).toUpperCase() + s.substring(1)
 
       for fluid in @opts.fluids
         bucketName = "bucket#{ucfirst fluid}"
-        @registry.registerItem bucketName, {itemTexture: "i/bucket_#{fluid}", fluid: fluid, containerItem: 'bucket', onUse: @placeFluid.bind(@, fluid)}
+        @registry.registerItem bucketName,
+          itemTexture: "i/bucket_#{fluid}"
+          fluid: fluid
+          containerItem: 'bucket'
+          onUse: @placeFluid.bind(@, fluid)
+          displayName: "#{ucfirst fluid} Bucket"
+
         @fluidBuckets[fluid] = bucketName
 
     if @opts.registerBlocks
       for fluid in @opts.fluids
         # TODO: fluid mechanics, probably in separate module (these blocks are completely static)
         # https://github.com/deathcap/voxel-ideas/issues/1
-        @registry.registerBlock fluid, {texture: "#{fluid}_still", fluid: fluid}
+        @registry.registerBlock fluid,
+          texture: "#{fluid}_still"
+          fluid: fluid
+          #displayName: "Still #{ucfirst fluid}"
 
     if @opts.registerRecipes
       @recipes = @game.plugins.get('voxel-recipes') ? throw new Error('voxel-bucket requires voxel-recipes plugin when opts.registerRecipes enabled')
