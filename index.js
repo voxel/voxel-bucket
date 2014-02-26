@@ -8,21 +8,29 @@
     return new BucketPlugin(game, opts);
   };
 
+  module.exports.pluginInfo = {
+    loadAfter: ['voxel-registry', 'voxel-fluid']
+  };
+
   BucketPlugin = (function() {
     function BucketPlugin(game, opts) {
-      var _ref;
+      var _ref, _ref1;
       this.game = game;
       this.opts = opts;
       this.registry = (function() {
         if ((_ref = this.game.plugins.get('voxel-registry')) != null) {
           return _ref;
         } else {
-          throw new Error('voxel-bucket requires voxel-registry plugin');
+          throw new Error('voxel-bucket requires "voxel-registry" plugin');
         }
       }).call(this);
-      if (opts.fluids == null) {
-        opts.fluids = ['water', 'lava'];
-      }
+      this.fluidPlugin = (function() {
+        if ((_ref1 = this.game.plugins.get('voxel-fluid')) != null) {
+          return _ref1;
+        } else {
+          throw new Error('voxel-bucket requires "voxel-fluid" plugin');
+        }
+      }).call(this);
       this.fluidBuckets = {};
       if (opts.registerBlocks == null) {
         opts.registerBlocks = true;
@@ -37,7 +45,7 @@
     }
 
     BucketPlugin.prototype.enable = function() {
-      var bucketName, fluid, ucfirst, _i, _j, _len, _len1, _ref, _ref1, _ref2;
+      var bucketName, fluid, ucfirst, _i, _len, _ref, _ref1;
       if (this.opts.registerItems) {
         this.registry.registerItem('bucket', {
           itemTexture: 'i/bucket_empty',
@@ -47,7 +55,7 @@
         ucfirst = function(s) {
           return s.substr(0, 1).toUpperCase() + s.substring(1);
         };
-        _ref = this.opts.fluids;
+        _ref = this.fluidPlugin.getFluidNames();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           fluid = _ref[_i];
           bucketName = "bucket" + (ucfirst(fluid));
@@ -61,20 +69,10 @@
           this.fluidBuckets[fluid] = bucketName;
         }
       }
-      if (this.opts.registerBlocks) {
-        _ref1 = this.opts.fluids;
-        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
-          fluid = _ref1[_j];
-          this.registry.registerBlock(fluid, {
-            texture: "" + fluid + "_still",
-            fluid: fluid
-          });
-        }
-      }
       if (this.opts.registerRecipes) {
         this.recipes = (function() {
-          if ((_ref2 = this.game.plugins.get('voxel-recipes')) != null) {
-            return _ref2;
+          if ((_ref1 = this.game.plugins.get('voxel-recipes')) != null) {
+            return _ref1;
           } else {
             throw new Error('voxel-bucket requires voxel-recipes plugin when opts.registerRecipes enabled');
           }

@@ -2,12 +2,13 @@
 ItemPile = require 'itempile'
 
 module.exports = (game, opts) -> new BucketPlugin game, opts
+module.exports.pluginInfo =
+  loadAfter: ['voxel-registry', 'voxel-fluid'] # TODO: load after voxel-fluid dependants, too? post-init (other plugins might register other new fluids!)
 
 class BucketPlugin
   constructor: (@game, @opts) ->
-    @registry = @game.plugins.get('voxel-registry') ? throw new Error('voxel-bucket requires voxel-registry plugin')
-
-    opts.fluids ?= ['water', 'lava'] # TODO: fluid registry
+    @registry = @game.plugins.get('voxel-registry') ? throw new Error('voxel-bucket requires "voxel-registry" plugin')
+    @fluidPlugin = @game.plugins.get('voxel-fluid') ? throw new Error('voxel-bucket requires "voxel-fluid" plugin')
 
     @fluidBuckets = {}
 
@@ -26,7 +27,7 @@ class BucketPlugin
 
       ucfirst = (s) -> s.substr(0, 1).toUpperCase() + s.substring(1)
 
-      for fluid in @opts.fluids
+      for fluid in @fluidPlugin.getFluidNames()
         bucketName = "bucket#{ucfirst fluid}"
         @registry.registerItem bucketName,
           itemTexture: "i/bucket_#{fluid}"
@@ -36,15 +37,6 @@ class BucketPlugin
           displayName: "#{ucfirst fluid} Bucket"
 
         @fluidBuckets[fluid] = bucketName
-
-    if @opts.registerBlocks
-      for fluid in @opts.fluids
-        # TODO: fluid mechanics, probably in separate module (these blocks are completely static)
-        # https://github.com/deathcap/voxel-ideas/issues/1
-        @registry.registerBlock fluid,
-          texture: "#{fluid}_still"
-          fluid: fluid
-          #displayName: "Still #{ucfirst fluid}"
 
     if @opts.registerRecipes
       @recipes = @game.plugins.get('voxel-recipes') ? throw new Error('voxel-bucket requires voxel-recipes plugin when opts.registerRecipes enabled')
