@@ -84,7 +84,7 @@
     BucketPlugin.prototype.disable = function() {};
 
     BucketPlugin.prototype.pickupFluid = function(held, target) {
-      var fluid, fluidBucket, name, props;
+      var flowing, fluid, fluidBucket, name, props;
       console.log('pickupFluid', held, target);
       if (!target) {
         return;
@@ -96,6 +96,10 @@
       }
       fluid = props.fluid;
       if (!fluid) {
+        return;
+      }
+      flowing = props.flowing;
+      if (flowing) {
         return;
       }
       fluidBucket = this.fluidBuckets[fluid];

@@ -62,6 +62,9 @@ class BucketPlugin
     fluid = props.fluid
     return if not fluid
 
+    flowing = props.flowing
+    return if flowing # can only pick up source blocks, not flowing
+
     fluidBucket = @fluidBuckets[fluid]
     return if not fluidBucket
 
