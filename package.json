@@ -10,9 +10,9 @@
     "voxel"
   ],
   "dependencies": {
-    "itempile": "~0.2.0"
+    "itempile": "~0.2.0",
+    "ucfirst": "0.0.1"
   },
-  "peerDependencies": {
-  },
+  "peerDependencies": {},
   "license": "MIT"
 }

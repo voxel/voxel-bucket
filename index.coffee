@@ -1,5 +1,6 @@
 
 ItemPile = require 'itempile'
+ucfirst = require 'ucfirst'
 
 module.exports = (game, opts) -> new BucketPlugin game, opts
 module.exports.pluginInfo =
@@ -24,8 +25,6 @@ class BucketPlugin
         itemTexture: 'i/bucket_empty'
         onUse: @pickupFluid.bind(@)
         displayName: 'Empty Bucket'
-
-      ucfirst = (s) -> s.substr(0, 1).toUpperCase() + s.substring(1)
 
       for fluid in @fluidPlugin.getFluidNames()
         bucketName = "bucket#{ucfirst fluid}"
