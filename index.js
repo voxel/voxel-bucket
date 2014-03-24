@@ -52,7 +52,8 @@
         this.registry.registerItem('bucket', {
           itemTexture: 'i/bucket_empty',
           onUse: this.pickupFluid.bind(this),
-          displayName: 'Empty Bucket'
+          displayName: 'Empty Bucket',
+          creativeTab: 'fluids'
         });
         _ref = this.fluidPlugin.getFluidNames();
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -63,7 +64,8 @@
             fluid: fluid,
             containerItem: 'bucket',
             onUse: this.placeFluid.bind(this, fluid),
-            displayName: "" + (ucfirst(fluid)) + " Bucket"
+            displayName: "" + (ucfirst(fluid)) + " Bucket",
+            creativeTab: 'fluids'
           });
           this.fluidBuckets[fluid] = bucketName;
         }

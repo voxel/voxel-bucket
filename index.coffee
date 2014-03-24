@@ -25,6 +25,7 @@ class BucketPlugin
         itemTexture: 'i/bucket_empty'
         onUse: @pickupFluid.bind(@)
         displayName: 'Empty Bucket'
+        creativeTab: 'fluids'
 
       for fluid in @fluidPlugin.getFluidNames()
         bucketName = "bucket#{ucfirst fluid}"
@@ -34,6 +35,7 @@ class BucketPlugin
           containerItem: 'bucket'
           onUse: @placeFluid.bind(@, fluid)
           displayName: "#{ucfirst fluid} Bucket"
+          creativeTab: 'fluids'
 
         @fluidBuckets[fluid] = bucketName
 
