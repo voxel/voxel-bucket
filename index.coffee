@@ -78,7 +78,7 @@ class BucketPlugin
 
     return if not target
 
-    fluidIndex = @registry.getBlockID fluid
+    fluidIndex = @registry.getBlockIndex fluid
     return if not fluidIndex?
 
     # set voxel and empty bucket 

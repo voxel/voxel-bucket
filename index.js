@@ -117,7 +117,7 @@
       if (!target) {
         return;
       }
-      fluidIndex = this.registry.getBlockID(fluid);
+      fluidIndex = this.registry.getBlockIndex(fluid);
       if (fluidIndex == null) {
         return;
       }
