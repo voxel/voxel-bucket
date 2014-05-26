@@ -2,16 +2,23 @@
   "name": "voxel-bucket",
   "description": "buckets to pickup and place fluids (voxel.js plugin)",
   "version": "0.0.1",
+  "main": "bucket.coffee",
   "repository": {
     "type": "git",
     "url": "git@github.com:deathcap/voxel-bucket.git"
   },
   "keywords": [
-    "voxel"
+    "voxel",
+    "plugin",
+    "bucket",
+    "fluid"
   ],
   "dependencies": {
-    "itempile": "~0.2.0",
+    "itempile": "^0.2.1",
     "ucfirst": "0.0.1"
+  },
+  "browserify": {
+    "transform": [ "coffeeify" ]
   },
   "peerDependencies": {},
   "license": "MIT"
