@@ -13,9 +13,9 @@ class BucketPlugin
 
     @fluidBuckets = {}
 
-    opts.registerBlocks ?= true
-    opts.registerItems ?= true
-    opts.registerRecipes ?= true
+    @opts.registerBlocks ?= true
+    @opts.registerItems ?= true
+    @opts.registerRecipes ?= true
 
     @enable()
 
